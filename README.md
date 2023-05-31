@@ -107,3 +107,15 @@ yearly mass balance function:
 - notes: integration to be at hourly steps
 
 ## More features?
+
+# Running with real data
+
+Datasources:
+
+our own data:
+- temperature and precip (data from Gornergletscher 2007)
+
+
+- ERA5 data
+- swisstopo
+- glamos
