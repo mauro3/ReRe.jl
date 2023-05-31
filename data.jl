@@ -1,7 +1,7 @@
 #####
 # Downloading
 #####
-using Downloads, Dates
+using Downloads, Dates, DelimitedFiles
 
 """
     download_file(url, destination;
@@ -46,6 +46,32 @@ function download_file(url, dir, file; force_download=false)
     return dirfile
 end
 
+######
+# File readers
+######
+"""
+    read_campbell(file)
+
+Reads a Campbell logger format file with temperature and precip.
+Moves sampling from 30min to 1h
+
+Return
+- t -- as DateTime
+- T -- [C]
+- P -- [m/d]
+- elevation -- [m asl]
+"""
+function read_campbell(file)
+    dat = readdlm(file, ',')
+    y, d, hm = dat[:,2], dat[:,3], dat[:,4]
+    t = parse_date_time.(y,d,hm)
+    # go from 30min dt to 60 min
+    t = t[1:2:end]
+    temp = dat[1:2:end,6]
+    precip = dat[1:2:end,7] .+ dat[2:2:end,7] # this needs summing!
+    elevation = 2650
+    return t, temp, precip/1000*24, elevation
+end
 
 ######
 ## Misc helpers

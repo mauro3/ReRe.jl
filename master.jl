@@ -5,5 +5,11 @@ include("smb.jl")
 
 # Get data
 newdata_dir = "../new-data"
-download_file("file:///$(homedir())/itet-stor/vaw_public/werderm/rere-data/climate.dat",
+fl = download_file("file:///$(homedir())/itet-stor/vaw_public/werderm/rere-data/climate.dat",
               newdata_dir, "climate.dat")
+download_file("file:///$(homedir())/itet-stor/vaw_public/werderm/rere-data/info",
+              newdata_dir, "climate.inf")
+
+
+t,T,P,z_station = read_campbell(fl)
+# plot(t,P)
