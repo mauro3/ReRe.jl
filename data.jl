@@ -1,4 +1,55 @@
-using Dates
+#####
+# Downloading
+#####
+using Downloads, Dates
+
+"""
+    download_file(url, destination;
+                    force_download=false)
+
+Download a file, if it has not been downloaded already.
+
+For password protected access use the `~/.netrc` file to store passwords, see
+https://everything.curl.dev/usingcurl/netrc .
+
+For downloading files on the local file system prefix their path with `file://`
+as you would to see them in a browser.
+
+# Input
+- url -- url for download
+- destination -- path (directory + file) where to store it
+
+## Optional keyword args
+- force_download -- force the download, even if file is present
+
+# Output:
+- file with full path
+
+"""
+function download_file(url, dir, file; force_download=false)
+
+    dirfile = joinpath(dir, file)
+    mkpath(dir)
+
+    if isfile(dirfile) && !force_download
+        # do nothing
+        print(" ... already downloaded ... ")
+    elseif isfile(dirfile)
+        # delete and re-download
+        rm(dirfile)
+        print(" ... downloading ... ")
+        Downloads.download(url, dirfile)
+    else
+        # download
+        Downloads.download(url, dirfile)
+    end
+    return dirfile
+end
+
+
+######
+## Misc helpers
+######
 
 
 """
