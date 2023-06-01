@@ -12,4 +12,7 @@ download_file("file:///$(homedir())/itet-stor/vaw_public/werderm/rere-data/info"
 
 
 t,T,P,z_station = read_campbell(fl)
-# plot(t,P)
+
+using Plots
+plot(t,P)
+savefig("../products/precip.png")

@@ -3,6 +3,11 @@
 #####
 using Downloads, Dates, DelimitedFiles
 
+## make paths
+mkpath("../products")
+mkpath("../new-data")
+mkpath("../data")
+
 """
     download_file(url, destination;
                     force_download=false)
