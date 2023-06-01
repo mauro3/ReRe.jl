@@ -115,7 +115,8 @@ Datasources:
 our own data:
 - temperature and precip (data from Gornergletscher 2007)
 
-
+existing data:
 - ERA5 data
-- swisstopo
-- glamos
+or
+- swisstopo DEM from around 2007
+- Glamos outline from inventory 2010

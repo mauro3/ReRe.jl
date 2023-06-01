@@ -64,7 +64,7 @@ Return
 function read_campbell(file)
     dat = readdlm(file, ',')
     y, d, hm = dat[:,2], dat[:,3], dat[:,4]
-    t = parse_date_time.(y,d,hm)
+    t = parse_campbell_date_time.(y,d,hm)
     # go from 30min dt to 60 min
     t = t[1:2:end]
     temp = dat[1:2:end,6]
@@ -79,18 +79,18 @@ end
 
 
 """
-    parse_date_time(year, day, hourmin)
+    parse_date_time(year, day, HHMM)
 
 Parse the Campbell logger time format:
 `year, day of year, HHMM`
 
 Return DateTime object.
 """
-function parse_date_time(year, day, hourmin)
-    hour = floor(hourmin/100)
-    min = hourmin - 100*hour
+function parse_campbell_date_time(year, day, HHMM)
+    hour = floor(HHMM/100)
+    min = HHMM - 100*hour
     return DateTime(year, 1, 1, hour, min) + Day(day-1)
 end
 # Test it
-@assert parse_date_time(2001, 1, 1239) == DateTime(2001, 1, 1, 12, 39)
-@assert parse_date_time(2001, 365, 1239) == DateTime(2001, 12, 31, 12, 39)
+@assert parse_campbell_date_time(2001, 1, 1239) == DateTime(2001, 1, 1, 12, 39)
+@assert parse_campbell_date_time(2001, 365, 1239) == DateTime(2001, 12, 31, 12, 39)
