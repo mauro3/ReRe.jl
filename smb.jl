@@ -59,7 +59,13 @@ Solid precipitation (m/day).
 
 Synthetic for now.
 """
-precip(t) = 8e-3
+function precip(t, T_th, T)
+    if T<=T_th
+        return 8e-3
+    else
+        return 0.0
+    end
+end
 
 
 """
