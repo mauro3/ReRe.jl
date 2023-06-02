@@ -71,3 +71,16 @@ writedlm("../products/mb@4000.csv",
           [y m at4000]], ',')
 
 # 9. Reproduce your research: log into vierzack03.ethz.ch (or some other computer at hand, make sure to have the same file paths or do some magic), make a folder, in that folder clone the code repo, run the master script.
+
+# steps in bash-shell:
+# ssh werderm@vierzack03.ethz.ch # check the wiki on details of ssh
+# mkdir ~/tmp/rere
+# cd ~/tmp/rere
+# git clone git@github.com:mauro3/ReRe.jl.git
+## now specific to my implementation in Julia
+# cd ReRe.jl
+# julia --project
+# julia> using Pkg; Pkg.instantiate() # now wait some for the plotting package to be installed
+# julia> include("master.jl")
+##
+## ta-da!
