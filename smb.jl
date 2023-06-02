@@ -59,12 +59,27 @@ Solid precipitation (m/day).
 
 Synthetic for now.
 """
-function precip(t, T_th, T)
+precip(t) = 8e-3
+
+function solid_precip(precip, T, T_th)
     if T<=T_th
-        return 8e-3
+        return precip
     else
         return 0.0
     end
+end
+
+
+function integrate_smb(t_start, t_end, temp_fn, precip_fn, DDF,
+                       point_elevation, lapsrate, T_th)
+    out = 0.0
+    Δt = 1/24
+    for t = t_start:Δt:t_end-1/48 # exclusive of last point in interval
+        T = lapse(temp_fn(t), point_elevation, lapsrate)
+        out = out + Δt * (solid_precip(precip_fn(t), T, T_th) -
+                          meltrate(T, DDF))
+    end
+    return out
 end
 
 
@@ -75,16 +90,9 @@ NOTE: this integrates the point smb with hourly intervals... probably more appro
 would be on a daily basis as we use a DDF.  However, I cannot get myself to use
 such coarse integration...
 """
-function yearly_smb(temp_fn, precip_fn, DDF, point_elevation, lapsrate, T_th)
-    out = 0.0
-    Δt = 1/24
-    for t = 0:Δt:365
-        T = lapse(temp_fn(t), point_elevation, lapsrate)
-        out = out + Δt * (precip_fn(t, T_th, T) -
-                          meltrate(T, DDF))
-    end
-    return out
-end
+yearly_smb(temp_fn, precip_fn, DDF, point_elevation, lapsrate, T_th) =
+    integrate_smb(0, 365-1/48,
+                  temp_fn, precip_fn, DDF, point_elevation, lapsrate, T_th)
 
 using Plots
 t = 0:1/24:365

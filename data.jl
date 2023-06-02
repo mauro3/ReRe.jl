@@ -99,3 +99,11 @@ end
 # Test it
 @assert parse_campbell_date_time(2001, 1, 1239) == DateTime(2001, 1, 1, 12, 39)
 @assert parse_campbell_date_time(2001, 365, 1239) == DateTime(2001, 12, 31, 12, 39)
+
+"""
+    datetime2dayofyear(dt)
+
+Convert in one direction.  Ignores year.
+"""
+datetime2dayofyear(dt::DateTime) = dayofyear(dt) + hour(dt)/24 + minute(dt)/24/60
+datetime2dayofyear(dt::Date)     = dayofyear(dt)
