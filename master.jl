@@ -32,7 +32,7 @@ For t in days of year 2007
 """
 function temp_gorner(tt)
     Δt = 1/24
-    i = findfirst(tt .== 0:Δt:365)
+    i = findfirst(tt .≈ 0:Δt:365)
     return T[i]
 end
 """
@@ -42,7 +42,7 @@ For t in days of year 2007
 """
 function precip_gorner(tt)
     Δt = 1/24
-    i = findfirst(tt .== 0:Δt:365)
+    i = findfirst(tt .≈ 0:Δt:365)
     return P[i]
 end
 
@@ -72,7 +72,7 @@ writedlm("../products/mb@4000.csv",
 
 # 9. Reproduce your research: log into vierzack03.ethz.ch (or some other computer at hand, make sure to have the same file paths or do some magic), make a folder, in that folder clone the code repo, run the master script.
 
-# steps in bash-shell:
+# steps in bash-shell (also in the README.md):
 # ssh werderm@vierzack03.ethz.ch # check the wiki on details of ssh
 # mkdir ~/tmp/rere
 # cd ~/tmp/rere
